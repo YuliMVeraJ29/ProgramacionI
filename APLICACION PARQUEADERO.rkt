@@ -61,6 +61,7 @@
       )
       (display "ingrese la hora de entrada del vehiculo:")
       (set! hora (read))
+      (display hora)
       (if (= tipo 1)
           (insertar_hora horam 0 0)
           (insertar_hora horac 0 0)
