@@ -8,7 +8,7 @@
 (define vehiculo 0)
 (define pos 0)
 (define retirar 0)
-(define (principal opcion motos carros parkm parkc horam horac)
+(define (principal opcion motos carros horam horac)
   (display "Hola! estos son los datos que necesito para el parqueadero:")
   (newline)
   (display "ingrese el numero de espacios de parqueo para motos:")
@@ -21,15 +21,13 @@
   (set! precio (read))
   (define motos (make-vector tamañom 0))
   (define carros (make-vector tamañoc 0))
-  (define parkm (make-vector tamañom 0))
-  (define parkc (make-vector tamañoc 0))
   (define horam (make-vector tamañom 0))
   (define horac (make-vector tamañoc 0))
-  (menu opcion motos carros parkm parkc horam horac)
+  (menu opcion motos carros horam horac)
   )
 
 ;funcion menu que muestra las opciones a ejecutar
-(define (menu opcion motos carros parkm parkc horam horac)
+(define (menu opcion motos carros horam horac)
   (display "\n\nBIENVENIDO")
   (newline)
   (display "1. parquear un vehiculo")
@@ -42,11 +40,11 @@
   (newline)
   (display "escriba la opción que desea ejecutar:")
   (set! opcion (read))
-  (seleccion opcion motos carros parkm parkc horam horac)
+  (seleccion opcion motos carros horam horac)
   )
 
 ;funcion que ejecuta las opciones seleccionadas
- (define (seleccion opcion motos carros parkm parkc horam horac)
+ (define (seleccion opcion motos carros horam horac)
    (cond
      ((= opcion 1)
       (display "ingrese el tipo de vehiculo (escriba 1 si es moto o 2 si es carro):")
@@ -54,6 +52,7 @@
       (display "ingrese la placa del vehiculo (solo numeros):")
       (set! placa (read))
       (display motos)
+      (newline)
       (set! pos (read))
       (insertar_placa carros pos placa)
       (if (= tipo 1)
@@ -66,7 +65,7 @@
           (insertar_hora horam 0 0)
           (insertar_hora horac 0 0)
       )
-      (menu opcion motos carros parkm parkc horam horac)
+      (menu opcion motos carros horam horac)
      )
      ((= opcion 2)(display "ingrese el tipo de vehiculo que desea retirar (escriba 1 si es moto o 2 si es carro):")
                 (set! vehiculo (read))
@@ -84,25 +83,16 @@
                             )
                           )             )
                     )
-                (menu opcion motos carros parkm parkc horam horac)
+                (menu opcion motos carros horam horac)
                 )
    ((= opcion 4) (display "Adios, Vuelve pronto!! Gracias por usar nuestros servicios!!"))
-   ((= opcion 5) (display "\n\n") (display motos) (display "\n\n") (menu opcion motos carros parkm parkc horam horac))
+   ((= opcion 5) (display "\n\n") (display motos) (display "\n\n") (menu opcion motos carros horam horac))
    )
 )
-                      
-                
-
-
-;funcion que inserta tipo de vehiculo en el vector correspondiente
-(define (insertar_tipo v pos tipo)
-  (vector-set! v pos tipo)
-  )
                 
 ;funcion que inserta placa del vehiculo en el vector correspondiente
 (define (insertar_placa v pos placa)
   (vector-set! v pos placa)
-  (display v)
   )
 
 ;funcion que inserta la hora de entrada del vehiculo en el vector correspondiente
@@ -115,17 +105,11 @@
   (if (< pos (vector-length v))
       (begin
         (if (= elemento (vector-ref v pos))
-            (begin
-              (display "Lo encontre\n")
-              pos
-            )
+            pos
             (buscar v elemento (+ pos 1))
         )  
       )
-      (begin
-        (display "No lo encontre")
-        -1
-      )
+      -1
   )
 )
 
@@ -144,4 +128,6 @@
       (+ (espacioso v (+ pos 1)))
       )
   )
-(principal 0 0 0 0 0 0 0)           
+
+;Ejecucion del Proyecto
+(principal 0 0 0 0 0)           
