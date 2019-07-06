@@ -1,0 +1,12 @@
+# Para descargar repositorio
+git clone url_github
+
+# Para mirar cambios sobre el repositorio
+git status
+
+# Para subir
+git add .
+git commit -m "COMENTARIO"
+git push
+# Por si no funciona el anterior
+git push origin master
