@@ -30,7 +30,7 @@
 
 ;funcion menu que muestra las opciones a ejecutar
 (define (menu opcion motos carros parkm parkc horam horac)
-  (display "BIENVENIDO")
+  (display "\n\nBIENVENIDO")
   (newline)
   (display "1. parquear un vehiculo")
   (newline)
@@ -48,41 +48,48 @@
 ;funcion que ejecuta las opciones seleccionadas
  (define (seleccion opcion motos carros parkm parkc horam horac)
    (cond
-   ((= opcion 1)(display "ingrese el tipo de vehiculo (escriba 1 si es moto o 2 si es carro):")
-                (set! tipo (read))
-                (if (= tipo 1)
-                    (insertar_tipo motos 0 0)
-                    (insertar_tipo carros 0 0))
-                (display "ingrese la placa del vehiculo (solo numeros):")
-                (set! placa (read))
-                (display motos)
-                (set! pos (read))
-                (insertar_placa carros pos placa)
-                (if (= tipo 1)
-                    (insertar_placa motos pos placa)
-                    (insertar_placa carros pos placa))
-                (display "ingrese la hora de entrada del vehiculo:")
-                (set! hora (read))
-                (if (= tipo 1)
-                    (insertar_hora horam 0 0)
-                    (insertar_hora horac 0 0)
-                   )
-                (menu opcion motos carros parkm parkc horam horac)
-                )
-   ((= opcion 2)(display "ingrese el tipo de vehiculo que desea retirar (escriba 1 si es moto o 2 si es carro):")
+     ((= opcion 1)
+      (display "ingrese el tipo de vehiculo (escriba 1 si es moto o 2 si es carro):")
+      (set! tipo (read))
+      (display "ingrese la placa del vehiculo (solo numeros):")
+      (set! placa (read))
+      (display motos)
+      (set! pos (read))
+      (insertar_placa carros pos placa)
+      (if (= tipo 1)
+          (insertar_placa motos pos placa)
+          (insertar_placa carros pos placa)
+      )
+      (display "ingrese la hora de entrada del vehiculo:")
+      (set! hora (read))
+      (if (= tipo 1)
+          (insertar_hora horam 0 0)
+          (insertar_hora horac 0 0)
+      )
+      (menu opcion motos carros parkm parkc horam horac)
+     )
+     ((= opcion 2)(display "ingrese el tipo de vehiculo que desea retirar (escriba 1 si es moto o 2 si es carro):")
                 (set! vehiculo (read))
                 (if (= vehiculo 1)
                     (begin
                       (display "ingrese la placa del vehiculo que desea retirar:")
                       (set! retirar (read))
-                      (set! pos (bbrayan motos retirar 0))
-                      (if (equal? pos 0)
+                      (set! pos (buscar motos retirar 0))
+                      (display pos)
+                      (if (equal? pos -1)
                           (display "no esta")
                           (begin
                             (vector-set! motos pos 0)
+                            (display motos)
                             )
                           )             )
-                    ))))
+                    )
+                (menu opcion motos carros parkm parkc horam horac)
+                )
+   ((= opcion 4) (display "Adios, Vuelve pronto!! Gracias por usar nuestros servicios!!"))
+   ((= opcion 5) (display "\n\n") (display motos) (display "\n\n") (menu opcion motos carros parkm parkc horam horac))
+   )
+)
                       
                 
 
@@ -108,13 +115,19 @@
   (if (< pos (vector-length v))
       (begin
         (if (= elemento (vector-ref v pos))
-             pos 
+            (begin
+              (display "Lo encontre\n")
+              pos
+            )
             (buscar v elemento (+ pos 1))
-            
-            ))
-        (display "hola mundo")
-        )
+        )  
       )
+      (begin
+        (display "No lo encontre")
+        -1
+      )
+  )
+)
 
 ;funcion que cuenta los espacios desocupados en el vector correspondiente
 (define (espaciosd v pos)
@@ -130,18 +143,5 @@
       1
       (+ (espacioso v (+ pos 1)))
       )
-  )
-
-;otra funcion que busca un elemento en el vector correspondiente (nuevo intento)
-(define (bbrayan vect elemento pos)
-  (if (< pos (vector-length vect))
-  (if (= elemento (vector-ref vect pos))
-       pos
-      (begin
-      (bbrayan vect elemento (+ pos 1))
-      )
-  )
-  )
-  (set! pos 0)
   )
 (principal 0 0 0 0 0 0 0)           
